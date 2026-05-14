@@ -37,7 +37,7 @@ module execute_stage (
         .in0(instr_20_16_in),
         .in1(instr_15_11_in),
         .sel(reg_dst_in),
-        .y(selected_dest_reg)
+        .out(selected_dest_reg)
     );
 
     ex_alu_src_mux u_alu_src_mux (
