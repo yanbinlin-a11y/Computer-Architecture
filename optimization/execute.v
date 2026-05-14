@@ -37,14 +37,14 @@ module execute_stage (
         .in0(instr_20_16_in),
         .in1(instr_15_11_in),
         .sel(reg_dst_in),
-        .y(selected_dest_reg)
+        .out(selected_dest_reg)
     );
 
     ex_alu_src_mux u_alu_src_mux (
         .in0(read_data2_in),
         .in1(sign_ext_imm_in),
         .sel(alu_src_in),
-        .y(alu_input_b)
+        .out(alu_input_b)
     );
 
     ex_alu_control u_alu_control (
@@ -54,8 +54,8 @@ module execute_stage (
     );
 
     ex_alu u_alu (
-        .a(read_data1_in),
-        .b(alu_input_b),
+        .input0(read_data1_in),
+        .input1(alu_input_b),
         .alu_ctrl(alu_control_signal),
         .result(alu_result_internal),
         .zero(alu_zero_internal)
@@ -93,7 +93,7 @@ module ex_dest_reg_mux (
     input  wire [4:0] in0,
     input  wire [4:0] in1,
     input  wire       sel,
-    output wire [4:0] y
+    output wire [4:0] out
 );
     assign y = sel ? in1 : in0;
 endmodule
@@ -135,14 +135,14 @@ module ex_alu_src_mux (
     input  wire [31:0] in0,
     input  wire [31:0] in1,
     input  wire        sel,
-    output wire [31:0] y
+    output wire [31:0] out
 );
     assign y = sel ? in1 : in0;
 endmodule
 
 module ex_alu (
-    input  wire [31:0] a,
-    input  wire [31:0] b,
+    input  wire [31:0] input0,
+    input  wire [31:0] input1,
     input  wire [2:0]  alu_ctrl,
     output reg  [31:0] result,
     output wire        zero
