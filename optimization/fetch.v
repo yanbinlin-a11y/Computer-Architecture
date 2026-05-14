@@ -14,9 +14,9 @@ module fetch(
     wire [31:0] instr_data;
 
     mux m0(
-        .y(pc_mux),
-        .a_true(ex_mem_npc),
-        .b_false(next_pc),
+        .out(pc_mux),
+        .input0(ex_mem_npc),
+        .input1(next_pc),
         .sel(ex_mem_pc_src)
     );
 
@@ -50,12 +50,12 @@ module fetch(
 endmodule
 
 module mux(
-    output wire [31:0] y,
-    input  wire [31:0] a_true,
-    input  wire [31:0] b_false,
+    output wire [31:0] out,
+    input  wire [31:0] input0,
+    input  wire [31:0] input1,
     input  wire        sel
 );
-    assign y = sel ? a_true : b_false;
+    assign y = sel ? input0 : input1;
 endmodule
 
 module pc(
